@@ -1,0 +1,314 @@
+Everyware SDK
+A TypeScript SDK for integrating with the Everyware API platform. This SDK provides comprehensive access to payment processing, messaging, customer management, reporting, terminal management, and more.
+
+Installation
+npm install everyware-sdk
+Configuration
+First, import and initialize the services you need:
+
+import { 
+  BusinessService,
+  CustomerService,
+  MessageService,
+  PaymentService,
+  InvoiceService,
+  WebhookService,
+  TemplateService,
+  TokenService,
+  PayoutService,
+  ReportService,
+  IdentityService,
+  ChargebackService,
+  TerminalService,
+  OnboardingService,
+  SubscriptionService
+} from 'everyware-sdk';
+
+const config = {
+  apiKey: 'your_api_key',
+  username: 'your_username',
+  baseURL: 'https://rest.everyware.com' // Optional, defaults to this URL
+};
+
+// Initialize services
+const businessService = new BusinessService(config);
+const customerService = new CustomerService(config);
+// ... initialize other services as needed
+Available Services
+Business Management
+// Create a new business
+const business = await businessService.createBusiness({
+  // business details
+});
+
+// Create a merchant account
+const merchant = await businessService.createMerchant({
+  // merchant details
+});
+
+// Get businesses
+const { businesses } = await businessService.getBusinesses();
+Customer Management
+// Create a customer
+const customer = await customerService.createCustomer({
+  // customer details
+});
+
+// Update customer
+const updatedCustomer = await customerService.updateCustomer({
+  IndividualID: 'customer_id',
+  // updated details
+});
+Messaging
+// Send a message
+const message = await messageService.sendMessage({
+  // message details
+});
+
+// Get message history
+const messages = await messageService.getMessages({
+  // history request parameters
+});
+
+// Fetch SMS messages
+const smsMessages = await messageService.fetchSMSMessages({
+  // SMS fetch parameters
+});
+Template Messages
+// Send a template message
+const templateMessage = await templateService.sendTemplateMessage({
+  // template message details
+});
+Payment Processing
+// Process card payment
+const cardPayment = await paymentService.createCardPayment({
+  // card payment details
+});
+
+// Process ACH payment
+const achPayment = await paymentService.createACHPayment({
+  // ACH payment details
+});
+
+// Process authorization
+const auth = await paymentService.processAuthorization({
+  // authorization details
+});
+
+// Create refund
+const refund = await paymentService.createRefund({
+  // refund details
+});
+Token Management
+// Create card token
+const cardToken = await tokenService.createCardToken({
+  // card details
+});
+
+// Create ACH token
+const achToken = await tokenService.createACHToken({
+  // ACH details
+});
+
+// Remove token
+const removal = await tokenService.removeToken({
+  // token removal details
+});
+
+// Find payment methods by phone number
+const paymentMethods = await tokenService.findPaymentMethodsByPhone(
+  'hosted_page_id',
+  'phone_number'
+);
+Invoice Management
+// Create invoice
+const invoice = await invoiceService.createInvoice({
+  // invoice details
+});
+
+// Update invoice status
+const updatedInvoice = await invoiceService.updateInvoiceStatus({
+  // status update details
+});
+
+// Create SMS reminder
+const reminder = await invoiceService.createSMSReminder({
+  // reminder details
+});
+
+// Send invoice
+const sentInvoice = await invoiceService.sendInvoice({
+  // invoice sending details
+});
+Payout Management
+// Create payout
+const payout = await payoutService.createPayout({
+  // payout details
+});
+
+// Check payout status
+const status = await payoutService.inquirePayout({
+  // inquiry details
+});
+
+// Get balance
+const balance = await payoutService.getBalance();
+Reporting
+// Generate payment report
+const report = await reportService.generatePaymentReport({
+  // report parameters
+});
+
+// Get withdrawal batches
+const batches = await reportService.getWithdrawalBatches({
+  // batch request parameters
+});
+
+// Get withdrawal details
+const details = await reportService.getWithdrawalDetails({
+  // details request parameters
+});
+Terminal Management
+// Sync terminals
+const sync = await terminalService.syncTerminals();
+
+// Get terminals
+const terminals = await terminalService.getTerminals(true); // true for active only
+
+// Update terminal
+const updatedTerminal = await terminalService.updateTerminal({
+  // terminal update details
+});
+
+// Send terminal payment
+const terminalPayment = await terminalService.sendTerminalPayment({
+  // payment details
+});
+
+// Get transaction status
+const txStatus = await terminalService.getTransactionStatus(transactionId);
+Identity Verification
+// Match identity
+const identityMatch = await identityService.matchIdentity({
+  // identity match parameters
+});
+Chargeback Management
+// Get chargebacks
+const chargebacks = await chargebackService.getChargebacks({
+  // chargeback request parameters
+});
+Subscription Management
+// Create subscription
+const subscription = await subscriptionService.createSubscription({
+  CardToken: 'card_token',  // Optional - Either CardToken or ACHToken is required
+  ACHToken: 'ach_token',    // Optional - Either CardToken or ACHToken is required
+  PlanCode: 'PLAN123',      // Optional
+  StartDate: '1-1-2024',    // Optional
+  RecurringCharge: '10.00', // Required
+  DiscountAmount: '1.00',   // Optional
+  TaxAmount: '0.50',        // Optional
+  Interval: 'Monthly',      // Required - Weekly | Bi-Weekly | Monthly | Bi-Monthly | Quarterly | Annually
+  NumberOfIntervals: '12',  // Optional
+  ServiceDescription: 'Premium Service' // Optional
+});
+
+// Cancel subscription
+const cancellation = await subscriptionService.cancelSubscription({
+  SubscriptionID: '12345'
+});
+
+// Get subscription by ID
+const subscriptionDetails = await subscriptionService.getSubscriptionById({
+  SubscriptionID: '12345'
+});
+
+// Get all subscriptions
+const subscriptions = await subscriptionService.getSubscriptions({
+  ActiveOnly: true // Filter for active subscriptions only
+});
+Webhook Integration
+The SDK provides webhook handling capabilities for payments, messages, and customer events:
+
+// Configure webhooks
+const webhookConfig = {
+  url: 'https://your-webhook-endpoint.com',
+  // additional configuration
+};
+
+await webhookService.configurePaymentWebhook(webhookConfig);
+await webhookService.configureMessageWebhook(webhookConfig);
+await webhookService.configureCustomerWebhook(webhookConfig);
+
+// Listen for webhook events
+webhookService.on('payment', (data) => {
+  console.log('Payment webhook received:', data);
+});
+
+webhookService.on('message', (data) => {
+  console.log('Message webhook received:', data);
+});
+
+webhookService.on('customer', (data) => {
+  console.log('Customer webhook received:', data);
+});
+
+// Remove webhook listeners
+webhookService.off('payment', listenerFunction);
+Webhook Handling
+Backend Usage
+Webhooks should be handled on your backend server for security reasons. Example using Express:
+
+import express from 'express';
+import { WebhookService } from 'everyware-sdk';
+
+const app = express();
+const webhookService = new WebhookService(config);
+
+app.post('/webhooks/payment', express.urlencoded({ extended: true }), async (req, res) => {
+  await webhookService.handleWebhookEvent(req.body);
+  res.sendStatus(200);
+});
+Frontend Usage
+For frontend applications, you should only use the webhook configuration methods and listen for events through your backend:
+
+const webhookService = new WebhookService(config);
+
+// Configure webhooks
+await webhookService.configurePaymentWebhook({
+  url: 'https://your-backend.com/webhooks/payment',
+  username: 'webhook-user',
+  password: 'webhook-password'
+});
+Error Handling
+All service methods return promises and can throw errors. Implement proper error handling:
+
+try {
+  const payment = await paymentService.createCardPayment({
+    // payment details
+  });
+} catch (error) {
+  if (error.response) {
+    // Handle API error response
+    console.error('API Error:', error.response.data);
+    console.error('Status:', error.response.status);
+  } else if (error.request) {
+    // Handle request error
+    console.error('Request Error:', error.request);
+  } else {
+    // Handle other errors
+    console.error('Error:', error.message);
+  }
+}
+TypeScript Support
+The SDK is written in TypeScript and provides comprehensive type definitions for all requests and responses. Configure your tsconfig.json:
+
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}

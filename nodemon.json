@@ -1,0 +1,6 @@
+{
+  "verbose": true,
+  "ignore": ["*.test.js", "*.spec.js", "node_modules/*"],
+  "watch": ["*.js", "routes/*", "public/*", "views/*", "bin/*"],
+  "ext": "js,json,ejs"
+}

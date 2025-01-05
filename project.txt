@@ -1,0 +1,5 @@
+Essentially, we have a potential client that uses Xero for their accounting. They want to send Everyware Pay By Text Invoices to their clients to process payments, then have the information from Everyware's Payment Webhook create a sales invoice in Xero's software + apply a payment to it in an automated fashion.
+
+The end state is that they need a sales order for the customer as a record within Xero and that it needs to be marked as having been paid
+
+They also need refunds of Everyware invoices to be reported back to Xero. Our team is working on an updated payment webhook that will report back all transactions (including refunds), so that we can handle this part as well
