@@ -1,5 +1,25 @@
 require('dotenv').config();
 
+/**
+ * @module config
+ * @description Application configuration management loading from environment variables
+ */
+
+/**
+ * @typedef {Object} EverywareConfig
+ * @property {string} apiKey - Everyware API key
+ * @property {string} username - Everyware username
+ * @property {string} baseURL - Everyware API base URL
+ */
+
+/**
+ * @typedef {Object} XeroConfig
+ * @property {string} clientId - Xero OAuth2 client ID
+ * @property {string} clientSecret - Xero OAuth2 client secret
+ * @property {string} redirectUri - OAuth2 redirect URI
+ * @property {string} scopes - Space-separated OAuth2 scopes
+ */
+
 // Everyware configuration
 const everywareConfig = {
     apiKey: process.env.EVERYWARE_API_KEY,

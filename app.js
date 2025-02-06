@@ -36,26 +36,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Xero callback route needs to be before other routes
-app.get('/callback', async (req, res) => {
-  try {
-    const { xeroClient, setTokenSet } = require('./middleware/auth');
-    console.log('Callback URL:', req.url);
-    const tokenSet = await xeroClient.apiCallback(req.url);
-
-    // First set the token
-    await xeroClient.setTokenSet(tokenSet);
-    // Then store it
-    setTokenSet(tokenSet);
-
-    res.redirect('/auth/test');
-  } catch (error) {
-    console.error('Xero Callback Error:', error);
-    console.error('Error details:', error.response?.data || error.message);
-    res.status(500).send('Authentication callback failed');
-  }
-});
-
 // Register routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
