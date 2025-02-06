@@ -44,6 +44,7 @@ cp .env.example .env
 
 Edit the `.env` file with your Everyware and Xero credentials
 
+```
 EVERYWARE_API_KEY=your_key
 EVERYWARE_USERNAME=your_username
 EVERYWARE_BASE_URL=https://rest.everyware.com
@@ -51,6 +52,7 @@ XERO_CLIENT_ID=your_client_id
 XERO_CLIENT_SECRET=your_client_secret
 XERO_REDIRECT_URI=http://localhost:5005/auth/callback
 XERO_SCOPES="openid profile email accounting.transactions accounting.settings accounting.contacts offline_access"
+```
 
 3. Run the application
 
