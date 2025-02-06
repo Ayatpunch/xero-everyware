@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: docs/data-flow.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: docs/data-flow.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Data Flow Documentation between Everyware and Xero Systems
+ * 
+ * @description
+ * This document outlines the data flow between Everyware's payment processing system
+ * and Xero's accounting software. The integration handles payment processing and
+ * automatic invoice creation/reconciliation.
+ * 
+ * Flow Overview:
+ * 1. Invoice Creation in Everyware
+ * 2. Payment Processing
+ * 3. Webhook Notification
+ * 4. Xero Integration
+ * 
+ * @module DataFlow
+ */
+
+/**
+ * @section Invoice Creation Flow
+ * @description
+ * 1. Client initiates invoice creation via POST /invoices/create
+ * 2. System validates required fields:
+ *    - LineItems
+ *    - BusinessName
+ *    - TotalAmountDue
+ *    - BillToCellPhone
+ *    - Business Address Details
+ * 3. Everyware SDK creates invoice and generates payment link
+ * 4. System returns invoice details with payment URL
+ */
+
+/**
+ * @section Payment Processing Flow
+ * @description
+ * 1. Customer receives SMS with payment link
+ * 2. Customer completes payment through Everyware's interface
+ * 3. Everyware processes payment and generates transaction record
+ * 4. Everyware sends webhook notification to our system
+ */
+
+/**
+ * @section Webhook Processing Flow
+ * @description
+ * 1. System receives webhook at POST /webhooks/payment
+ * 2. Validates payment status (StatusID === "0" for success)
+ * 3. Extracts payment details:
+ *    - PaymentSid (Unique identifier)
+ *    - PaymentAmt (Amount paid)
+ *    - PaymentDate
+ *    - TransactionID
+ *    - Customer Information
+ * 4. Prepares data for Xero integration
+ */
+
+/**
+ * @section Xero Integration Flow
+ * @description
+ * 1. System creates Xero invoice with:
+ *    - Customer details (email/phone as identifier)
+ *    - Payment amount
+ *    - Service description
+ *    - Reference number
+ * 2. System immediately creates payment record in Xero:
+ *    - Links to created invoice
+ *    - Records payment method
+ *    - Applies full payment amount
+ * 3. Transaction is fully reconciled in Xero
+ * 
+ * @example
+ * // Example webhook data transformation to Xero format
+ * const paymentData = {
+ *     customerName: EmailAddress || Phone,
+ *     description: ServiceDescription,
+ *     amount: parseFloat(PaymentAmt),
+ *     reference: OrderNumber,
+ *     paymentDate: PaymentDate,
+ *     paymentMethod: `${CardType} ending in ${LastFour}`
+ * };
+ */
+
+/**
+ * @section Error Handling
+ * @description
+ * The system includes several error handling mechanisms:
+ * 
+ * 1. Payment Validation
+ *    - Verifies payment status before processing
+ *    - Logs failed payments without creating Xero records
+ * 
+ * 2. Xero Authentication
+ *    - Validates token before each Xero API call
+ *    - Auto-refreshes expired tokens
+ *    - Redirects to auth flow if needed
+ * 
+ * 3. Data Validation
+ *    - Validates required fields for invoice creation
+ *    - Ensures proper data formatting for both systems
+ *    - Handles missing or invalid data gracefully
+ */
+
+/**
+ * @section Security Considerations
+ * @description
+ * 1. Authentication
+ *    - Secure storage of Xero OAuth tokens
+ *    - API key validation for Everyware
+ * 
+ * 2. Data Protection
+ *    - Sensitive data handling (card details, personal information)
+ *    - Secure webhook processing
+ * 
+ * 3. Error Logging
+ *    - Structured error logging for debugging
+ *    - No sensitive data in logs
+ */
+
+/**
+ * @section Configuration Requirements
+ * @description
+ * Required environment variables:
+ * 
+ * Everyware Configuration:
+ * - EVERYWARE_API_KEY
+ * - EVERYWARE_USERNAME
+ * - EVERYWARE_BASE_URL
+ * 
+ * Xero Configuration:
+ * - XERO_CLIENT_ID
+ * - XERO_CLIENT_SECRET
+ * - XERO_REDIRECT_URI
+ * - XERO_SCOPES
+ */ </code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ApplicationFlow.html">ApplicationFlow</a></li><li><a href="module-DataFlow.html">DataFlow</a></li><li><a href="module-Documentation.html">Documentation</a></li><li><a href="module-SequenceDiagrams.html">SequenceDiagrams</a></li><li><a href="module-XeroEveryware.html">XeroEveryware</a></li><li><a href="module-config.html">config</a></li><li><a href="module-middleware_auth.html">middleware/auth</a></li><li><a href="module-routes_auth.html">routes/auth</a></li><li><a href="module-routes_invoices.html">routes/invoices</a></li><li><a href="module-routes_webhooks.html">routes/webhooks</a></li><li><a href="module-services_everyware.html">services/everyware</a></li><li><a href="module-services_xero.html">services/xero</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

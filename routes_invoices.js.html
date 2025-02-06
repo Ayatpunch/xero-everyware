@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/invoices.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/invoices.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const express = require('express');
+const router = express.Router();
+const { invoiceService } = require('../services/everyware');
+
+/**
+ * @module routes/invoices
+ * @description Handles invoice creation and management through Everyware's system
+ */
+
+/**
+ * @route POST /invoices/create
+ * @description Creates a new invoice in Everyware's system
+ * @param {Object} req.body - The invoice creation payload
+ * @param {Array&lt;Object>} req.body.LineItems - Array of items in the invoice
+ * @param {string} req.body.BusinessName - Name of the business
+ * @param {number} req.body.TotalAmountDue - Total amount to be paid
+ * @param {number} req.body.Subtotal - Subtotal amount before tax/fees
+ * @param {string} req.body.BillToCellPhone - Customer's phone number
+ * @param {string} req.body.BusinessAddress1 - Business street address
+ * @param {string} req.body.BusinessCity - Business city
+ * @param {string} req.body.BusinessState - Business state
+ * @param {string} req.body.BusinessZip - Business ZIP code
+ * @param {string} req.body.BillToZip - Customer ZIP code
+ * @returns {Promise&lt;Object>} Created invoice details
+ */
+router.post('/create', async (req, res) => {
+    try {
+        // Validate minimum required fields according to Everyware API
+        // const requiredFields = [
+        //     'LineItems', 'BusinessName', 'TotalAmountDue', 'Subtotal',
+        //     'BillToCellPhone', 'BusinessAddress1', 'BusinessCity',
+        //     'BusinessState', 'BusinessZip', 'BillToZip'
+        // ];
+
+        // const missingFields = requiredFields.filter(field => !req.body[field]);
+
+        // if (missingFields.length > 0) {
+        //     return res.status(400).json({
+        //         error: 'Missing required fields',
+        //         required: missingFields
+        //     });
+        // }
+
+        console.log(req.body)
+        const invoice = await invoiceService.createInvoice(req.body);
+
+        res.json(invoice);
+
+    } catch (error) {
+        console.error('Invoice Creation Error:', error)
+        res.status(500).json({
+            error: 'Failed to create invoice',
+            details: error.message
+        });
+    }
+});
+
+// Test endpoint with sample data
+router.get('/test-create', async (req, res) => {
+    try {
+        const sampleInvoice = {
+            BusinessName: "Test Business",
+            LineItems: [
+                {
+                    Description: "Test Invoice",
+                    Quantity: 1,
+                    AmountEach: 10,
+                    Total: 10
+                }
+            ],
+            Subtotal: 10,
+            TotalAmountDue: 10,
+            BillToCellPhone: "5125551212",
+            BillToName: "Test Customer",
+            BillToAddress1: "123 Test St",
+            BillToCity: "Test City",
+            BillToState: "TX",
+            BillToZip: "12345",
+            BusinessAddress1: "456 Business St",
+            BusinessCity: "Business City",
+            BusinessState: "TX",
+            BusinessZip: "54321",
+            SendSMSInvoice: true,
+            generateQRCode: true,
+            IsPartialPayment: false
+        };
+
+        const response = await fetch('http://localhost:5005/invoices/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sampleInvoice)
+        });
+
+        const result = await response.json();
+        res.json(result);
+
+    } catch (error) {
+        console.error('Test Invoice Creation Error:', error);
+        res.status(500).json({
+            error: 'Failed to create test invoice',
+            details: error.message
+        });
+    }
+});
+
+module.exports = router; </code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ApplicationFlow.html">ApplicationFlow</a></li><li><a href="module-DataFlow.html">DataFlow</a></li><li><a href="module-Documentation.html">Documentation</a></li><li><a href="module-SequenceDiagrams.html">SequenceDiagrams</a></li><li><a href="module-XeroEveryware.html">XeroEveryware</a></li><li><a href="module-config.html">config</a></li><li><a href="module-middleware_auth.html">middleware/auth</a></li><li><a href="module-routes_auth.html">routes/auth</a></li><li><a href="module-routes_invoices.html">routes/invoices</a></li><li><a href="module-routes_webhooks.html">routes/webhooks</a></li><li><a href="module-services_everyware.html">services/everyware</a></li><li><a href="module-services_xero.html">services/xero</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
