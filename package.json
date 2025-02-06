@@ -2,7 +2,7 @@
   "name": "xero-everyware",
   "version": "0.0.0",
   "private": true,
-  "homepage": "https://<your-github-username>.github.io/<repository-name>",
+  "homepage": "https://ayatpunch.github.io/xero-everyware",
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
