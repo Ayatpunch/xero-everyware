@@ -1,11 +1,19 @@
 /**
- * @fileoverview Sequence Diagrams for Everyware-Xero Integration Flows
+ * @module SequenceDiagrams
  * @description Visual representation of the main integration flows using Mermaid syntax
  */
 
 /**
- * @section Invoice Creation and Payment Flow
- * @mermaid
+ * @typedef {Object} FlowDiagram
+ * @property {string} name - Name of the flow
+ * @property {string} description - Description of the flow
+ */
+
+/**
+ * @name Invoice Creation Flow
+ * @description Complete flow of invoice creation and payment processing
+ * @example
+ * ```mermaid
  * sequenceDiagram
  *     participant C as Client
  *     participant A as API Server
@@ -18,27 +26,14 @@
  *     A->>E: Create invoice
  *     E-->>A: Return invoice with payment URL
  *     A-->>C: Return invoice details
- *     
- *     Note over E,Cu: Everyware sends SMS to customer
- *     
- *     Cu->>E: Access payment link
- *     Cu->>E: Submit payment
- *     E->>E: Process payment
- *     
- *     E->>A: POST /webhooks/payment
- *     
- *     A->>A: Validate payment status
- *     A->>X: Create invoice
- *     X-->>A: Return invoice ID
- *     A->>X: Create payment
- *     X-->>A: Confirm payment
- *     
- *     A-->>E: 200 OK
+ * ```
  */
 
 /**
- * @section Authentication Flow
- * @mermaid
+ * @name Authentication Flow
+ * @description OAuth2 authentication process with Xero
+ * @example
+ * ```mermaid
  * sequenceDiagram
  *     participant C as Client
  *     participant A as API Server
@@ -53,13 +48,7 @@
  *     X->>A: Callback with auth code
  *     A->>X: Exchange code for tokens
  *     X-->>A: Return access/refresh tokens
- *     
- *     A->>A: Store tokens
- *     A->>X: Get tenants
- *     X-->>A: Return tenant list
- *     
- *     A->>A: Store tenant ID
- *     A-->>C: Redirect to /auth/test
+ * ```
  */
 
 /**

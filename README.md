@@ -12,7 +12,9 @@ The integration handles:
 
 ## Documentation
 
-To generate and view the documentation:
+View the full documentation at [https://ayatpunch.github.io/xero-everyware](https://ayatpunch.github.io/xero-everyware)
+
+Or generate locally:
 
 ```bash
 npm run docs
@@ -81,6 +83,19 @@ See the sequence diagrams in the documentation for detailed flows of:
 - Token Refresh Flow
 - Data Transformation Flow
 - Refund Flow
+
+Example flow:
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+    participant Xero
+    
+    Client->>Server: Create Invoice
+    Server->>Xero: Create Record
+    Xero-->>Server: Confirm
+    Server-->>Client: Success
+```
 
 ## Development
 

@@ -1,7 +1,7 @@
 {
   "source": {
     "include": ["./"],
-    "exclude": ["node_modules", "docs"],
+    "exclude": ["node_modules", "docs/generated"],
     "includePattern": ".+\\.js(doc|x)?$"
   },
   "plugins": ["plugins/markdown"],
@@ -9,10 +9,8 @@
     "destination": "./docs/generated",
     "recurse": true,
     "readme": "./README.md",
-    "template": "templates/default",
     "encoding": "utf8",
-    "private": true,
-    "package": "./package.json"
+    "private": true
   },
   "templates": {
     "cleverLinks": true,
@@ -20,7 +18,11 @@
     "default": {
       "includeDate": false,
       "outputSourceFiles": true,
-      "useLongnameInNav": true
+      "useLongnameInNav": true,
+      "scripts": ["https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"],
+      "head": [
+        "<script>window.onload = function() { mermaid.initialize({startOnLoad:true}); };</script>"
+      ]
     }
   }
 }
