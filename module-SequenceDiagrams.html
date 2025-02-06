@@ -199,22 +199,7 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>```mermaid
-sequenceDiagram
-    participant C as Client
-    participant A as API Server
-    participant X as Xero
-    
-    C->>A: GET /auth/xero
-    A->>X: Request consent URL
-    X-->>A: Return consent URL
-    A-->>C: Redirect to Xero login
-    
-    C->>X: User authenticates
-    X->>A: Callback with auth code
-    A->>X: Exchange code for tokens
-    X-->>A: Return access/refresh tokens
-```</code></pre>
+    <pre class="prettyprint"><code>```mermaidsequenceDiagram    participant C as Client    participant A as API Server    participant X as Xero        C->>A: GET /auth/xero    A->>X: Request consent URL    X-->>A: Return consent URL    A-->>C: Redirect to Xero login        C->>X: User authenticates    X->>A: Callback with auth code    A->>X: Exchange code for tokens    X-->>A: Return access/refresh tokens```</code></pre>
 
 
 
@@ -281,20 +266,7 @@ sequenceDiagram
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>```mermaid
-sequenceDiagram
-    participant C as Client
-    participant A as API Server
-    participant E as Everyware
-    participant Cu as Customer
-    participant X as Xero
-    
-    C->>A: POST /invoices/create
-    A->>A: Validate invoice data
-    A->>E: Create invoice
-    E-->>A: Return invoice with payment URL
-    A-->>C: Return invoice details
-```</code></pre>
+    <pre class="prettyprint"><code>```mermaidsequenceDiagram    participant C as Client    participant A as API Server    participant E as Everyware    participant Cu as Customer    participant X as Xero        C->>A: POST /invoices/create    A->>A: Validate invoice data    A->>E: Create invoice    E-->>A: Return invoice with payment URL    A-->>C: Return invoice details```</code></pre>
 
 
 
