@@ -8,10 +8,19 @@
   "opts": {
     "destination": "./docs/generated",
     "recurse": true,
-    "readme": "./README.md"
+    "readme": "./README.md",
+    "template": "templates/default",
+    "encoding": "utf8",
+    "private": true,
+    "package": "./package.json"
   },
   "templates": {
     "cleverLinks": true,
-    "monospaceLinks": true
+    "monospaceLinks": true,
+    "default": {
+      "includeDate": false,
+      "outputSourceFiles": true,
+      "useLongnameInNav": true
+    }
   }
 }

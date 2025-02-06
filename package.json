@@ -2,11 +2,13 @@
   "name": "xero-everyware",
   "version": "0.0.0",
   "private": true,
+  "homepage": "https://<your-github-username>.github.io/<repository-name>",
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "docs": "jsdoc -c jsdoc.json",
-    "docs:serve": "npm run docs && serve docs/generated"
+    "docs:serve": "npm run docs && serve docs/generated",
+    "predeploy": "npm run docs"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

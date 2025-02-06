@@ -61,3 +61,7 @@ temp/
 
 # Yarn Integrity file
 .yarn-integrity
+
+# Documentation
+docs/generated/*
+!docs/generated/.nojekyll
